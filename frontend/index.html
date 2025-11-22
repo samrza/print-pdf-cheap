@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PDF Cut & Stack Imposer</title>
+  </head>
+  <body>
+    <h1>PDF 2-UP Cut & Stack Imposer</h1>
+    <form id="uploadForm">
+      <input type="file" id="pdfFile" accept="application/pdf" required />
+      <button type="submit">Generate</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const file = document.getElementById("pdfFile").files[0];
+
+          const formData = new FormData();
+          formData.append("file", file);
+
+          const response = await fetch("http://127.0.0.1:8000/impose", {
+            method: "POST",
+            body: formData,
+          });
+
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "output.pdf";
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+    </script>
+  </body>
+</html>
