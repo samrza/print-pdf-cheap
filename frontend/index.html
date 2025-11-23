@@ -101,7 +101,8 @@
         formData.append("file", file);
 
         // CHANGE THIS AFTER DEPLOYMENT
-        const backendURL = "http://127.0.0.1:8000/impose";
+        const backendURL = "https://print-pdf-cheap.onrender.com/impose";
+
 
         const res = await fetch(backendURL, {
           method: "POST",
