@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-from impose import impose_cut_stack
+from backend.impose import impose_cut_stack
 import tempfile
 
 app = FastAPI()
@@ -17,6 +17,7 @@ app.add_middleware(
 @app.post("/impose")
 async def impose_endpoint(file: UploadFile = File(...)):
     input_pdf = await file.read()
+
     output_stream = impose_cut_stack(input_pdf)
 
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
